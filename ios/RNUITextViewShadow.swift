@@ -159,7 +159,10 @@ class RNUITextViewShadow: RCTShadowView {
     let maxSize = CGSize(width: CGFloat(maxWidth), height: CGFloat(MAXFLOAT))
     let textSize = self.attributedText.boundingRect(with: maxSize, options: .usesLineFragmentOrigin, context: nil)
 
-    var totalLines = self.lineHeight == 0.0 ? 0 : Int(ceil(textSize.height / self.lineHeight))
+    let epsilon: CGFloat = 0.0001
+    let adjustedLineCountFloat = (textSize.height / self.lineHeight) - epsilon
+
+    var totalLines = self.lineHeight == 0.0 ? 0 : Int(ceil(adjustedLineCountFloat))
 
     if self.numberOfLines != 0, totalLines > self.numberOfLines {
       totalLines = self.numberOfLines
