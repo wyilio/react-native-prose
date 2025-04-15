@@ -111,7 +111,7 @@ class RNUITextViewShadow: RCTShadowView {
         attributes[.strikethroughStyle] = child.getTextDecorationStyle()
         attributes[.strikethroughColor] = child.getTextDecorationColor()
       }
-      
+
       if child.backgroundColor != nil {
         attributes[.backgroundColor] = child.backgroundColor
       }
@@ -156,19 +156,30 @@ class RNUITextViewShadow: RCTShadowView {
   // 3. Determine how many lines the text is, and limit that number if it exceeds the max
   // 4. Set the frame size and return the YGSize. YGSize requires Float values while CGSize needs CGFloat
   func getNeededSize(maxWidth: Float) -> YGSize {
-    let maxSize = CGSize(width: CGFloat(maxWidth), height: CGFloat(MAXFLOAT))
-    let textSize = self.attributedText.boundingRect(with: maxSize, options: .usesLineFragmentOrigin, context: nil)
+    let textStorage = NSTextStorage(attributedString: self.attributedText)
 
-    let epsilon: CGFloat = 0.0001
-    let adjustedLineCountFloat = (textSize.height / self.lineHeight) - epsilon
+    let textContainer = NSTextContainer(size: CGSize(width: CGFloat(maxWidth), height: .greatestFiniteMagnitude))
+    textContainer.lineFragmentPadding = 0
 
-    var totalLines = self.lineHeight == 0.0 ? 0 : Int(ceil(adjustedLineCountFloat))
+    let layoutManager = NSLayoutManager()
+    layoutManager.addTextContainer(textContainer)
+    textStorage.addLayoutManager(layoutManager)
+    layoutManager.ensureLayout(for: textContainer)
 
-    if self.numberOfLines != 0, totalLines > self.numberOfLines {
-      totalLines = self.numberOfLines
+    var lineCount = 0
+    var totalHeight: CGFloat = 0
+
+    layoutManager.enumerateLineFragments(forGlyphRange: layoutManager.glyphRange(for: textContainer)) { _, usedRect, _, _, _ in
+        totalHeight += usedRect.height
+        lineCount += 1
     }
 
-    self.frameSize = CGSize(width: CGFloat(maxWidth), height: CGFloat(CGFloat(totalLines) * self.lineHeight))
+    let totalLines = self.lineHeight == 0.0 ? 0 : lineCount
+    if self.numberOfLines != 0, totalLines > self.numberOfLines {
+      totalHeight = CGFloat(CGFloat(self.numberOfLines) * self.lineHeight)
+    }
+
+    self.frameSize = CGSize(width: CGFloat(maxWidth), height: CGFloat(totalHeight))
     return YGSize(width: Float(self.frameSize.width), height: Float(self.frameSize.height))
   }
 
