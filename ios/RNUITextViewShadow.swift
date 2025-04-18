@@ -122,6 +122,21 @@ class RNUITextViewShadow: RCTShadowView {
       // Set the paragraph style attributes if necessary. We can check this by seeing if the provided
       // line height is not 0.0.
       let paragraphStyle = NSMutableParagraphStyle()
+
+      // Set the text alignment
+      switch child.textAlign {
+      case "left":
+        paragraphStyle.alignment = .left
+      case "right":
+        paragraphStyle.alignment = .right
+      case "center":
+        paragraphStyle.alignment = .center
+      case "justify":
+        paragraphStyle.alignment = .justified
+      default:
+        paragraphStyle.alignment = .natural
+      }
+
       if child.lineHeight != 0.0 {
         // Whenever we change the line height for the text, we are also removing the DynamicType
         // adjustment for line height. We need to get the multiplier and apply that to the
@@ -130,18 +145,18 @@ class RNUITextViewShadow: RCTShadowView {
         paragraphStyle.minimumLineHeight = child.lineHeight * scaleMultiplier
         paragraphStyle.maximumLineHeight = child.lineHeight * scaleMultiplier
 
-        string.addAttribute(
-          NSAttributedString.Key.paragraphStyle,
-          value: paragraphStyle,
-          range: NSMakeRange(0, string.length)
-        )
-
         // To calcualte the size of the text without creating a new UILabel or UITextView, we have
         // to store this line height for later.
         self.lineHeight = child.lineHeight
       } else {
         self.lineHeight = font.lineHeight
       }
+
+      string.addAttribute(
+        NSAttributedString.Key.paragraphStyle,
+        value: paragraphStyle,
+        range: NSMakeRange(0, string.length)
+      )
 
       finalAttributedString.append(string)
     }

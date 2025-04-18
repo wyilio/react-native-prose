@@ -11,6 +11,7 @@ class RNUITextViewChildShadow: RCTShadowView {
   @objc var letterSpacing: CGFloat = 0.0
   @objc var lineHeight: CGFloat = 0.0
   @objc var pointerEvents: NSString?
+  @objc var textAlign: String?
   @objc var textDecorationLine: RCTTextDecorationLineType = .none
   @objc var textDecorationStyle: String = "solid"
   @objc var textDecorationColor: UIColor = .black
