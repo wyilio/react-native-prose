@@ -1,7 +1,7 @@
 {
-  "name": "react-native-uitextview",
+  "name": "react-native-prose",
   "version": "1.4.0",
-  "description": "UITextView for React Native",
+  "description": "Text component for prose in React Native",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
   "types": "lib/typescript/src/index.d.ts",
