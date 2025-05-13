@@ -8,7 +8,7 @@ import {
   ScrollView,
   Alert
 } from 'react-native'
-import {UITextView as Text} from 'react-native-uitextview'
+import {ProseText as Text} from 'react-native-prose'
 
 export default function App() {
   const [baseNumLines, setBaseNumLines] = React.useState(1)

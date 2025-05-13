@@ -2,7 +2,7 @@
   "compilerOptions": {
     "rootDir": ".",
     "paths": {
-      "react-native-uitextview": ["./src/index"]
+      "react-native-prose": ["./src/index"]
     },
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
