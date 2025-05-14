@@ -1,2 +1,4 @@
 import {ProseText} from './Text'
-export {ProseText}
+import {Prose} from './Prose'
+
+export {ProseText, Prose}

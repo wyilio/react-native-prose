@@ -47,7 +47,6 @@ export const RNUITextViewChild =
         if (Platform.OS !== 'ios') return null
         throw new Error(LINKING_ERROR)
       }
-
 const TextAncestorContext = React.createContext<[boolean, ViewStyle]>([
   false,
   StyleSheet.create({})
@@ -135,8 +134,10 @@ function ProseTextInner(props: ProseProps) {
 }
 
 export function ProseText(props: ProseProps) {
-  if (Platform.OS !== 'ios') {
+  if (Platform.OS === 'android') {
     return <RNText {...props} />
+  } else if (Platform.OS === 'ios') {
+    return <ProseTextInner {...props} />
   }
-  return <ProseTextInner {...props} />
+  return <RNText {...props} />
 }

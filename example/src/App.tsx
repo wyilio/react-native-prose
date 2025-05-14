@@ -8,7 +8,7 @@ import {
   ScrollView,
   Alert
 } from 'react-native'
-import {ProseText as Text} from 'react-native-prose'
+import {ProseText as Text, Prose} from 'react-native-prose'
 
 export default function App() {
   const [baseNumLines, setBaseNumLines] = React.useState(1)
@@ -52,10 +52,56 @@ export default function App() {
             </Text>
           </View>
 
+          <Prose
+            paragraphSpacing={16}
+            style={{
+              lineHeight: 32,
+              fontSize: 19
+            }}>
+            <Text selectable uiTextView style={styles.lineHeight30}>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+              enim ad minim veniam, quis nostrud exercitation ullamco laboris
+              nisi ut{' '}
+              <Text style={styles.fontBold}>
+                aliquip ex ea commodo consequat
+              </Text>
+              . Duis aute irure dolor in reprehenderit in voluptate velit esse
+              cillum dolore eu{' '}
+              <Text style={styles.fontItalic}>fugiat nulla pariatur</Text>.
+              Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
+              officia deserunt mollit anim id est laborum.
+            </Text>
+            <Text selectable uiTextView style={styles.lineHeight30}>
+              Sed ut perspiciatis, unde omnis iste natus error sit voluptatem
+              accusantium doloremque{' '}
+              <Text style={styles.backgroundColor}>
+                laudantium, totam rem aperiam
+              </Text>{' '}
+              eaque ipsa, quae ab illo inventore veritatis et quasi architecto
+              beatae vitae dicta sunt, explicabo.
+            </Text>
+            <Text selectable uiTextView style={styles.lineHeight30}>
+              Nemo enim ipsam voluptatem, quia voluptas sit, aspernatur aut odit
+              aut fugit, sed quia consequuntur magni dolores eos, qui ratione
+              voluptatem sequi nesciunt, neque porro quisquam est, qui dolorem
+              ipsum, quia dolor sit amet consectetur adipiscing velit, sed quia
+              non numquam do eius modi tempora incididunt, ut labore et dolore
+              magnam aliquam quaerat voluptatem.
+            </Text>
+          </Prose>
+
           <View>
             <RNText style={styles.subheader}>
               RN-UITextView, highlightable
             </RNText>
+            <Text selectable uiTextView style={styles.text}>
+              Hello world!
+            </Text>
+          </View>
+
+          <View>
+            <RNText style={styles.subheader}>RN-Prose</RNText>
             <Text selectable uiTextView style={styles.text}>
               Hello world!
             </Text>
@@ -609,7 +655,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   text: {
-    fontSize: 18
+    fontSize: 20,
+    lineHeight: 20
   },
   coloredBlue: {
     color: 'blue'
@@ -663,7 +710,7 @@ const styles = StyleSheet.create({
     lineHeight: 10
   },
   lineHeight30: {
-    lineHeight: 30
+    lineHeight: 50
   },
   backgroundColor: {
     backgroundColor: 'yellow'

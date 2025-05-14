@@ -75,6 +75,7 @@ class RNUITextViewShadow: RCTShadowView {
 
   override func dirtyLayout() {
     super.dirtyLayout()
+    (self.superview)?.dirtyLayout()
     YGNodeMarkDirty(self.yogaNode)
   }
 
