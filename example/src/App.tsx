@@ -8,7 +8,7 @@ import {
   ScrollView,
   Alert
 } from 'react-native'
-import {UITextView as Text} from 'react-native-uitextview'
+import {UITextView as Text, Prose} from 'react-native-prose'
 
 export default function App() {
   const [baseNumLines, setBaseNumLines] = React.useState(1)
@@ -17,12 +17,12 @@ export default function App() {
   const [uiNumLines, setUiNumLines] = React.useState(1)
   const [uiLayoutNumLines, setUiLayoutNumLines] = React.useState(0)
 
-  const onPress = React.useCallback((part?: number) => {
-    Alert.alert('Pressed', `You pressed the text! Part: ${part}`)
+  const onPress = React.useCallback((text?: string) => {
+    Alert.alert('Pressed', `You pressed the text! ${text}`)
   }, [])
 
-  const onLongPress = React.useCallback((part?: number) => {
-    Alert.alert('Long Pressed', `You long pressed the text! Part: ${part}`)
+  const onLongPress = React.useCallback((text?: string) => {
+    Alert.alert('Long Pressed', `You long pressed the text! text: ${text}`)
   }, [])
 
   return (
@@ -51,6 +51,55 @@ export default function App() {
               Hello world!
             </Text>
           </View>
+
+          <Prose paragraphSpacing={16}>
+            <Text selectable uiTextView style={styles.lineHeight30}>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+              enim ad minim veniam, quis nostrud exercitation ullamco laboris
+              nisi ut{' '}
+              <Text style={styles.fontBold}>
+                aliquip ex ea commodo consequat
+              </Text>
+              . Duis aute irure dolor in reprehenderit in voluptate velit esse
+              cillum dolore eu{' '}
+              <Text style={styles.fontItalic}>fugiat nulla pariatur</Text>.
+              Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
+              officia deserunt mollit anim id est{' '}
+              <Text
+                onPress={() => onPress('laborum.')}
+                style={[styles.coloredHex, styles.underlined]}>
+                laborum.
+              </Text>
+            </Text>
+            <Text selectable uiTextView style={styles.lineHeight30}>
+              Sed ut perspiciatis, unde omnis iste natus error sit voluptatem
+              accusantium doloremque{' '}
+              <Text style={styles.backgroundColor}>
+                laudantium, totam rem aperiam
+              </Text>{' '}
+              eaque ipsa, quae ab illo inventore veritatis et quasi architecto
+              beatae vitae dicta sunt, explicabo.
+            </Text>
+            <Text selectable uiTextView style={styles.lineHeight30}>
+              Nemo enim ipsam voluptatem, quia voluptas sit, aspernatur aut odit
+              aut fugit, sed{' '}
+              <Text
+                onPress={() => onLongPress('quia consequuntur')}
+                style={[styles.coloredHex, styles.underlined]}>
+                quia consequuntur
+              </Text>{' '}
+              magni dolores eos, qui ratione voluptatem sequi nesciunt, neque
+              porro quisquam est, qui dolorem ipsum, quia dolor sit{' '}
+              <Text
+                onPress={() => onPress('amet consectetur')}
+                style={[styles.coloredHex, styles.underlined]}>
+                amet consectetur
+              </Text>{' '}
+              adipiscing velit , sed quia non numquam do eius modi tempora
+              incididunt, ut labore et dolore magnam aliquam quaerat voluptatem.
+            </Text>
+          </Prose>
 
           <View>
             <RNText style={styles.subheader}>
@@ -468,28 +517,28 @@ export default function App() {
 
           <View>
             <RNText style={styles.subheader}>Base</RNText>
-            <RNText onPress={() => onPress(1)} style={styles.text}>
+            <RNText onPress={() => onPress('1')} style={styles.text}>
               Press Me
             </RNText>
             <RNText style={styles.text}>
               Portions of base text:{' '}
               <RNText
                 style={[styles.text, styles.coloredBlue, styles.underlined]}
-                onPress={() => onPress(1)}
-                onLongPress={() => onLongPress(1)}>
+                onPress={() => onPress('1')}
+                onLongPress={() => onLongPress('1')}>
                 Part One
               </RNText>{' '}
               <RNText
                 style={[styles.text, styles.coloredHsl, styles.underlined]}
-                onPress={() => onPress(2)}
-                onLongPress={() => onLongPress(2)}>
+                onPress={() => onPress('2')}
+                onLongPress={() => onLongPress('2')}>
                 Part Two
               </RNText>{' '}
               <RNText style={[styles.text]}>Emoji 😅😅😅😅</RNText>P
               <RNText
                 style={[styles.text, styles.coloredHex, styles.underlined]}
-                onPress={() => onPress(3)}
-                onLongPress={() => onLongPress(3)}>
+                onPress={() => onPress('3')}
+                onLongPress={() => onLongPress('3')}>
                 Part Three{' '}
               </RNText>
             </RNText>
@@ -500,26 +549,26 @@ export default function App() {
               style={styles.text}
               selectable
               uiTextView
-              onPress={() => onPress(1)}
-              onLongPress={() => onLongPress(1)}>
+              onPress={() => onPress('1')}
+              onLongPress={() => onLongPress('1')}>
               Press Me
             </Text>
             <Text style={styles.text} selectable uiTextView>
               Portions of UITextView text:{' '}
               <Text
                 style={[styles.text, styles.coloredBlue, styles.underlined]}
-                onPress={() => onPress(1)}>
+                onPress={() => onPress('1')}>
                 Part One
               </Text>{' '}
               <Text
                 style={[styles.text, styles.coloredHsl, styles.underlined]}
-                onPress={() => onPress(2)}>
+                onPress={() => onPress('2')}>
                 Part Two
               </Text>{' '}
               <Text style={[styles.text]}>Emoji 😅😅😅😅</Text>P
               <Text
                 style={[styles.text, styles.coloredHex, styles.underlined]}
-                onPress={() => onPress(3)}>
+                onPress={() => onPress('3')}>
                 Part Three{' '}
               </Text>
             </Text>
