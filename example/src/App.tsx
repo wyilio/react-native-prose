@@ -6,9 +6,10 @@ import {
   Text as RNText,
   SafeAreaView,
   ScrollView,
-  Alert
+  Alert,
+  Platform
 } from 'react-native'
-import {UITextView as Text, Prose} from 'react-native-prose'
+import {UITextView as Text, Prose, ProseText} from 'react-native-prose'
 
 export default function App() {
   const [baseNumLines, setBaseNumLines] = React.useState(1)
@@ -29,7 +30,7 @@ export default function App() {
     <SafeAreaView style={{flex: 1}}>
       <ScrollView style={{flex: 1, paddingHorizontal: 10}}>
         <View style={{gap: 20, paddingBottom: 200}}>
-          <RNText style={styles.header}>React Native UITextView Example</RNText>
+          <RNText style={styles.header}>React Native Prose Example</RNText>
 
           <View>
             <RNText style={styles.subheader}>
@@ -52,55 +53,6 @@ export default function App() {
             </Text>
           </View>
 
-          <Prose paragraphSpacing={16}>
-            <Text selectable uiTextView style={styles.lineHeight30}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut{' '}
-              <Text style={styles.fontBold}>
-                aliquip ex ea commodo consequat
-              </Text>
-              . Duis aute irure dolor in reprehenderit in voluptate velit esse
-              cillum dolore eu{' '}
-              <Text style={styles.fontItalic}>fugiat nulla pariatur</Text>.
-              Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-              officia deserunt mollit anim id est{' '}
-              <Text
-                onPress={() => onPress('laborum.')}
-                style={[styles.coloredHex, styles.underlined]}>
-                laborum.
-              </Text>
-            </Text>
-            <Text selectable uiTextView style={styles.lineHeight30}>
-              Sed ut perspiciatis, unde omnis iste natus error sit voluptatem
-              accusantium doloremque{' '}
-              <Text style={styles.backgroundColor}>
-                laudantium, totam rem aperiam
-              </Text>{' '}
-              eaque ipsa, quae ab illo inventore veritatis et quasi architecto
-              beatae vitae dicta sunt, explicabo.
-            </Text>
-            <Text selectable uiTextView style={styles.lineHeight30}>
-              Nemo enim ipsam voluptatem, quia voluptas sit, aspernatur aut odit
-              aut fugit, sed{' '}
-              <Text
-                onPress={() => onLongPress('quia consequuntur')}
-                style={[styles.coloredHex, styles.underlined]}>
-                quia consequuntur
-              </Text>{' '}
-              magni dolores eos, qui ratione voluptatem sequi nesciunt, neque
-              porro quisquam est, qui dolorem ipsum, quia dolor sit{' '}
-              <Text
-                onPress={() => onPress('amet consectetur')}
-                style={[styles.coloredHex, styles.underlined]}>
-                amet consectetur
-              </Text>{' '}
-              adipiscing velit , sed quia non numquam do eius modi tempora
-              incididunt, ut labore et dolore magnam aliquam quaerat voluptatem.
-            </Text>
-          </Prose>
-
           <View>
             <RNText style={styles.subheader}>
               RN-UITextView, highlightable
@@ -108,6 +60,111 @@ export default function App() {
             <Text selectable uiTextView style={styles.text}>
               Hello world!
             </Text>
+          </View>
+
+          <View>
+            <RNText style={styles.subheader}>RN-Prose, selectable:</RNText>
+            <Prose>
+              <ProseText style={styles.text}>Hello world!</ProseText>
+            </Prose>
+          </View>
+
+          <RNText style={styles.header}>Prose</RNText>
+
+          <View>
+            <RNText style={styles.subheader}>RN-Prose, lorem ipsum:</RNText>
+            <Prose paragraphSpacing={16}>
+              <ProseText
+                style={[
+                  styles.lineHeight30,
+                  styles.fontSize20,
+                  styles.coloredBlack
+                ]}>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                nisi ut{' '}
+                <ProseText
+                  style={[
+                    styles.fontBold,
+                    {
+                      fontFamily: Platform.select({
+                        ios: 'Times New Roman',
+                        android: 'serif',
+                        default: 'serif'
+                      })
+                    }
+                  ]}>
+                  aliquip ex ea commodo consequat 📚
+                </ProseText>
+                . Duis aute irure dolor in reprehenderit in voluptate velit esse
+                cillum dolore eu{' '}
+                <ProseText style={styles.fontItalic}>
+                  fugiat nulla pariatur
+                </ProseText>
+                . Excepteur sint occaecat cupidatat non proident, sunt in culpa
+                qui officia deserunt mollit anim id est{' '}
+                <ProseText
+                  onPress={() => onPress('laborum.')}
+                  style={[styles.coloredHex, styles.underlined]}>
+                  laborum.
+                </ProseText>
+              </ProseText>
+              <ProseText
+                style={[
+                  styles.lineHeight30,
+                  styles.fontSize20,
+                  styles.coloredBlack
+                ]}>
+                Sed ut perspiciatis, unde omnis iste natus error sit voluptatem
+                accusantium doloremque{' '}
+                <ProseText style={styles.backgroundColor}>
+                  laudantium, totam rem aperiam
+                </ProseText>{' '}
+                eaque ipsa, quae ab illo inventore veritatis et quasi architecto
+                beatae vitae dicta sunt, explicabo.
+              </ProseText>
+              <ProseText
+                style={[
+                  styles.lineHeight30,
+                  styles.fontSize20,
+                  styles.coloredBlack
+                ]}>
+                Nemo enim ipsam voluptatem, quia voluptas sit, aspernatur aut
+                odit aut fugit, sed{' '}
+                <ProseText
+                  onPress={() => onLongPress('quia consequuntur')}
+                  style={[styles.coloredHex, styles.underlined]}>
+                  quia consequuntur
+                </ProseText>{' '}
+                magni dolores eos, qui ratione voluptatem sequi nesciunt, neque
+                porro quisquam est, qui dolorem ipsum, quia dolor sit{' '}
+                <ProseText
+                  onPress={() => onPress('amet consectetur')}
+                  style={[styles.coloredHex, styles.underlined]}>
+                  amet consectetur
+                </ProseText>{' '}
+                adipiscing velit , sed quia non numquam do eius modi tempora
+                incididunt, ut labore et dolore magnam aliquam quaerat
+                voluptatem.
+              </ProseText>
+            </Prose>
+          </View>
+
+          <View>
+            <RNText style={styles.subheader}>RN-Prose, fontSize:</RNText>
+            <Prose paragraphSpacing={16}>
+              <ProseText style={{fontSize: 20, ...styles.fontItalic}}>
+                One
+                <ProseText style={{fontSize: 30, ...styles.fontItalic}}>
+                  Two
+                  <ProseText style={{fontSize: 40, ...styles.fontItalic}}>
+                    Three
+                  </ProseText>
+                  Four
+                </ProseText>
+              </ProseText>
+            </Prose>
           </View>
 
           <RNText style={styles.header}>Styles</RNText>
@@ -659,6 +716,9 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 18
+  },
+  coloredBlack: {
+    color: 'black'
   },
   coloredBlue: {
     color: 'blue'

@@ -6,8 +6,11 @@ import {
   UIManager,
   requireNativeComponent,
   Platform,
+  Text as RNText,
   StyleSheet
 } from 'react-native'
+import {UITextView} from './UITextView'
+import {AndroidTextView} from './AndroidTextView'
 
 const LINKING_ERROR = `The view 'RNProseView' from 'react-native-prose' doesn't seem to be linked.`
 
@@ -20,7 +23,7 @@ export interface RNProseViewProps extends TextProps {
   style: ViewStyle[]
 }
 
-export const RNProseView =
+const RNProseView =
   UIManager.getViewManagerConfig?.('RNProseView') != null
     ? requireNativeComponent<RNProseViewProps>('RNProseView')
     : () => {
@@ -28,19 +31,33 @@ export const RNProseView =
         throw new Error(LINKING_ERROR)
       }
 
+const ProseContext = React.createContext<boolean>(false)
+
+export const useProseContext = () => React.useContext(ProseContext)
+
 export function Prose({style, children, ...rest}: ProseProps) {
   const flattenedStyle = React.useMemo(
     () => StyleSheet.flatten([style]),
     [style]
   )
 
-  if (Platform.OS === 'ios') {
+  if (Platform.OS === 'ios' || Platform.OS === 'android') {
     return (
-      <RNProseView {...rest} style={[flattenedStyle]}>
-        {children}
-      </RNProseView>
+      <ProseContext.Provider value={true}>
+        <RNProseView {...rest} style={[flattenedStyle]}>
+          {children}
+        </RNProseView>
+      </ProseContext.Provider>
     )
   } else {
     return <View />
   }
+}
+export function ProseText(props: TextProps) {
+  if (Platform.OS === 'ios') {
+    return <UITextView selectable uiTextView {...props} />
+  } else if (Platform.OS === 'android') {
+    return <AndroidTextView {...props} />
+  }
+  return <RNText {...props} />
 }
